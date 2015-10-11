@@ -8,16 +8,39 @@
     exit(1);
   }
   // opening the input file
-  $file_stream = fopen("input.txt",'r');
+  $file_stream = fopen($argv[2],'r');
+  $file_write = fopen($argv[3],'a');
   if(!$file_stream)
   {
     echo ("Sorry could not open the file");
     exit(1);
   }
+
+  if($argv[1] == 2)
+  {
+    $map = array('a' => 'q','C' => 'Z', 'D' => 'c', 'y' => 'Y');
+  }
   while($input_character = fgetc($file_stream))
   {
-    $decoded_character = decryptCharacter($input_character);
-    echo $decoded_character;
+    if($argv[1] == 1)
+    {
+      $decoded_character = decryptCharacter($input_character);
+      fwrite($file_write, $decoded_character);
+    }
+    elseif ($argv[1] == 2)
+    {
+      if($map[$input_character])
+      {
+        fwrite($file_write,$map[$input_character]);
+      }
+      else {
+        fwrite($file_write,$input_character);
+      }
+    }
+    else {
+      echo "Sorry wrong task\n";
+      exit(1);
+    }
   }
 
 function decryptCharacter($input_character)
