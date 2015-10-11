@@ -70,6 +70,16 @@ function decryptCharacter($input_character)
     }
     return chr($ascii_value);
   }
+  elseif($ascii_value >= 48 && $ascii_value <= 57)
+  {
+    $ascii_value += 5;
+    if($ascii_value > 57)
+    {
+      $ascii_value -= 57;
+      $ascii_value = 48 + $ascii_value - 1;
+    }
+    return chr($ascii_value);
+  }
   else {
       return $input_character;
   }
