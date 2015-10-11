@@ -1,7 +1,6 @@
 <?php
-
   if(count($argv) < 4)
-  {
+  {// if the number of command line arguments is not enough
     echo "missing command line arguments\n";
     echo "Use the following\n";
     echo "php filename.php task_number input.txt output.txt\n";
@@ -11,7 +10,7 @@
   $file_stream = fopen($argv[2],'r'); // opening the input file
   $file_write = fopen($argv[3],'a'); // file stream to write out the output file
   if(!$file_stream)
-  {
+  { // check if the input file can be opened
     echo ("Sorry could not open the file");
     exit(1);
   }
@@ -29,13 +28,8 @@
     }
     elseif ($argv[1] == 2)
     {
-      if($map[$input_character])
-      {
-        fwrite($file_write,$map[$input_character]);
-      }
-      else {
-        fwrite($file_write,$input_character);
-      }
+        $mapped_character = mapCharacter($map,$input_character);
+        fwrite($file_write, $mapped_character);
     }
     else {
       echo "Sorry wrong task\n";
@@ -43,6 +37,17 @@
     }
   }
 
+
+function mapCharacter($map,$input_character)
+{
+  if($map[$input_character])
+  {
+    return $map[$input_character];
+  }
+  else {
+    return $input_character;
+  }
+}
 function decryptCharacter($input_character)
 { // function that takes in a character and decodes it
   $ascii_value = ord($input_character);
