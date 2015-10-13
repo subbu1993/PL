@@ -32,7 +32,7 @@
         fwrite($file_write, $mapped_character);
     }
     else {
-      echo "Sorry wrong task\n";
+      echo "Sorry wrong task\nUse task number as either 1 or 2";
       exit(1);
     }
   }
@@ -40,7 +40,7 @@
 
 function mapCharacter($map,$input_character)
 {
-  if($map[$input_character])
+  if(array_key_exists($input_character,$map))
   {
     return $map[$input_character];
   }
