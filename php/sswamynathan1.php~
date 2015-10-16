@@ -7,30 +7,26 @@
     exit(1);
   }
 
-  if(!file_exists($argv[2]))
+  $file_stream = fopen($argv[2],'r'); // opening the input file
+  $file_write = fopen($argv[3],'a'); // file stream to write out the output file
+  if(!$file_stream)
   { // check if the input file can be opened
     echo ("Sorry could not open the file");
     exit(1);
   }
 
-  $file_stream = fopen($argv[2],'r'); // opening the input file
-  $file_write = fopen($argv[3],'w'); // file stream to write out the output file
-
-
   if($argv[1] == 2) // setting up the map for task 2
   {
-    $map = array('A' => 'Q', 'B' => 'R', 'C' => 'S','D' => 'T','E' => 'U', 'F' => 'V', 'G' => 'W', 'H' => 'X','I' => 'Y','J' => 'Z', 'K' => 'A', 'L' => 'B','M' => 'C', 'N' => 'D', 'O' => 'E', 'P' => 'F',
-		'Q' => 'G', 'R' => 'H','S' => 'I', 'T' => 'J', 'U' => 'K','V' => 'L','W' => 'M', 'X' => 'N','Y' => 'O','Z' => 'P',
-    'a' => 'q', 'b' => 'r', 'c' => 's','d' => 't','e' => 'u', 'f' => 'v','g' => 'w', 'h' => 'x',
-		'i' => 'y','j' => 'z', 'k' => 'a', 'l' => 'b','m' => 'c', 'n' => 'd', 'o' => 'e','p' => 'f','q' => 'g','r' => 'h',
-    's' => 'i', 't' => 'j', 'u' => 'k','v' => 'l','w' => 'm', 'x' => 'n', 'y' => 'o' , 'z' => 'p' );
+    $map = array('a' => 'q','C' => 'Z', 'D' => 'c', 'y' => 'Y');
   }
   while(false !== ($input_character = fgetc($file_stream)))
   {
     if($argv[1] == 1)
     {
-      $encoded_character = encryptCharacter($input_character);
-      fwrite($file_write, $encoded_character);
+
+      $decoded_character = decryptCharacter($input_character);
+      echo "$input_character  => $decoded_character\n";
+      fwrite($file_write, $decoded_character);
     }
     elseif ($argv[1] == 2)
     {
@@ -38,15 +34,15 @@
         fwrite($file_write, $mapped_character);
     }
     else {
-      echo "Sorry wrong task\nUse task number as either 1 or 2";
-      exit(1);
+      // echo "Sorry wrong task\n";
+      // exit(1);
     }
   }
 
 
 function mapCharacter($map,$input_character)
 {
-  if(array_key_exists($input_character,$map))
+  if($map[$input_character])
   {
     return $map[$input_character];
   }
@@ -54,7 +50,7 @@ function mapCharacter($map,$input_character)
     return $input_character;
   }
 }
-function encryptCharacter($input_character)
+function decryptCharacter($input_character)
 { // function that takes in a character and decodes it
   $ascii_value = ord($input_character);
   if($ascii_value >= 65 && $ascii_value <= 122)
@@ -65,7 +61,7 @@ function encryptCharacter($input_character)
       if($ascii_value > 90)
       {// wrap around
         $ascii_value = $ascii_value - 90;
-        $ascii_value += 65 - 1;
+        $ascii_value += 65 + $ascii_value - 1;
       }
     }
     elseif ($ascii_value >=97 && $ascii_value <= 122)
@@ -74,7 +70,7 @@ function encryptCharacter($input_character)
       if($ascii_value > 122)
       { // wrap around
         $ascii_value = $ascii_value - 122;
-        $ascii_value += 97 - 1;
+        $ascii_value += 97 + $ascii_value - 1;
       }
     }
     else
@@ -89,7 +85,7 @@ function encryptCharacter($input_character)
     if($ascii_value > 57)
     { // wrap around
       $ascii_value -= 57;
-      $ascii_value += 48 - 1;
+      $ascii_value = 48 + $ascii_value - 1;
     }
     return chr($ascii_value);
   }
