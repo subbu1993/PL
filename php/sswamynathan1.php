@@ -23,8 +23,8 @@
   {
     if($argv[1] == 1)
     {
-      $decoded_character = decryptCharacter($input_character);
-      fwrite($file_write, $decoded_character);
+      $encoded_character = encryptCharacter($input_character);
+      fwrite($file_write, $encoded_character);
     }
     elseif ($argv[1] == 2)
     {
@@ -32,15 +32,15 @@
         fwrite($file_write, $mapped_character);
     }
     else {
-      // echo "Sorry wrong task\n";
-      // exit(1);
+      echo "Sorry wrong task\nUse task number as either 1 or 2";
+      exit(1);
     }
   }
 
 
 function mapCharacter($map,$input_character)
 {
-  if($map[$input_character])
+  if(array_key_exists($input_character,$map))
   {
     return $map[$input_character];
   }
@@ -48,7 +48,7 @@ function mapCharacter($map,$input_character)
     return $input_character;
   }
 }
-function decryptCharacter($input_character)
+function encryptCharacter($input_character)
 { // function that takes in a character and decodes it
   $ascii_value = ord($input_character);
   if($ascii_value >= 65 && $ascii_value <= 122)
