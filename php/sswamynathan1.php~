@@ -23,7 +23,9 @@
   {
     if($argv[1] == 1)
     {
+
       $decoded_character = decryptCharacter($input_character);
+      echo "$input_character  => $decoded_character\n";
       fwrite($file_write, $decoded_character);
     }
     elseif ($argv[1] == 2)
@@ -59,7 +61,7 @@ function decryptCharacter($input_character)
       if($ascii_value > 90)
       {// wrap around
         $ascii_value = $ascii_value - 90;
-        $ascii_value += 65 + - 1;
+        $ascii_value += 65 + $ascii_value - 1;
       }
     }
     elseif ($ascii_value >=97 && $ascii_value <= 122)
@@ -68,7 +70,7 @@ function decryptCharacter($input_character)
       if($ascii_value > 122)
       { // wrap around
         $ascii_value = $ascii_value - 122;
-        $ascii_value += 97 - 1;
+        $ascii_value += 97 + $ascii_value - 1;
       }
     }
     else
@@ -83,7 +85,7 @@ function decryptCharacter($input_character)
     if($ascii_value > 57)
     { // wrap around
       $ascii_value -= 57;
-      $ascii_value += 48 - 1;
+      $ascii_value = 48 + $ascii_value - 1;
     }
     return chr($ascii_value);
   }
