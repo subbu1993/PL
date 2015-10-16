@@ -8,7 +8,7 @@
   }
 
   $file_stream = fopen($argv[2],'r'); // opening the input file
-  $file_write = fopen($argv[3],'a'); // file stream to write out the output file
+  $file_write = fopen($argv[3],'w'); // file stream to write out the output file
   if(!$file_stream)
   { // check if the input file can be opened
     echo ("Sorry could not open the file");
@@ -17,7 +17,11 @@
 
   if($argv[1] == 2) // setting up the map for task 2
   {
-    $map = array('a' => 'q','C' => 'Z', 'D' => 'c', 'y' => 'Y');
+    $map = array('A' => 'Q', 'B' => 'R', 'C' => 'S','D' => 'T','E' => 'U', 'F' => 'V', 'G' => 'W', 'H' => 'X','I' => 'Y','J' => 'Z', 'K' => 'A', 'L' => 'B','M' => 'C', 'N' => 'D', 'O' => 'E', 'P' => 'F',
+		'Q' => 'G', 'R' => 'H','S' => 'I', 'T' => 'J', 'U' => 'K','V' => 'L','W' => 'M', 'X' => 'N','Y' => 'O','Z' => 'P',
+    'a' => 'q', 'b' => 'r', 'c' => 's','d' => 't','e' => 'u', 'f' => 'v','g' => 'w', 'h' => 'x',
+		'i' => 'y','j' => 'z', 'k' => 'a', 'l' => 'b','m' => 'c', 'n' => 'd', 'o' => 'e','p' => 'f','q' => 'g','r' => 'h',
+    's' => 'i', 't' => 'j', 'u' => 'k','v' => 'l','w' => 'm', 'x' => 'n', 'y' => 'o' , 'z' => 'p' );
   }
   while(false !== ($input_character = fgetc($file_stream)))
   {
@@ -59,7 +63,7 @@ function encryptCharacter($input_character)
       if($ascii_value > 90)
       {// wrap around
         $ascii_value = $ascii_value - 90;
-        $ascii_value += 65 + - 1;
+        $ascii_value += 65 - 1;
       }
     }
     elseif ($ascii_value >=97 && $ascii_value <= 122)
