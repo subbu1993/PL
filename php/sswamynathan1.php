@@ -7,13 +7,15 @@
     exit(1);
   }
 
-  $file_stream = fopen($argv[2],'r'); // opening the input file
-  $file_write = fopen($argv[3],'w'); // file stream to write out the output file
-  if(!$file_stream)
+  if(!file_exists($argv[2]))
   { // check if the input file can be opened
     echo ("Sorry could not open the file");
     exit(1);
   }
+
+  $file_stream = fopen($argv[2],'r'); // opening the input file
+  $file_write = fopen($argv[3],'w'); // file stream to write out the output file
+
 
   if($argv[1] == 2) // setting up the map for task 2
   {
